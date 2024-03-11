@@ -1,5 +1,4 @@
 use master
-drop database Edu_Book_Store
 create database Edu_Book_Store
 
 use Edu_Book_Store
@@ -44,11 +43,11 @@ go
 create table Voucher
 (
 	MaVoucher int identity primary key,
-	TenVoucher nvarchar,
+	TenVoucher nvarchar(100),
 	NgayBatDau date,
 	NgayKetThuc date,
 	Giamgia float,
-	dieukien float
+	DieuKien nvarchar(100)
 )
 
 if OBJECT_ID('Coupon') is not null
@@ -57,11 +56,11 @@ go
 create table Coupon
 (
 	MaCoupon int identity primary key,
-	TenCoupon nvarchar,
+	TenCoupon nvarchar(100),
 	NgayBatDau date,
 	NgayKetThuc date,
-	Quatang nvarchar,
-	dieukien int
+	Quatang nvarchar(100),
+	DieuKien nvarchar(100)
 )
 
 if OBJECT_ID('ChuDe') is not null
