@@ -100,7 +100,7 @@ public class Login extends JFrame {
         lblLogin.setBounds(145, 11, 257, 40);
         contentPane.add(lblLogin);
         btnLogin.setIcon(
-                new ImageIcon("D:\\SOF203\\JAVA3_PH45758_Assignment\\src\\image\\login.png"));
+                new ImageIcon("D:\\image\\login.png"));
 
         btnLogin.setForeground(Color.BLACK);
         btnLogin.addActionListener(new ActionListener() {
@@ -116,7 +116,7 @@ public class Login extends JFrame {
 
         JLabel lblUser = new JLabel("Login");
         lblUser.setIcon(new ImageIcon(
-                "D:\\SOF203\\JAVA3_PH45758_Assignment\\src\\image\\user.jpg"));
+                "D:\\image\\user.jpg"));
         lblUser.setBounds(10, 25, 122, 150);
         contentPane.add(lblUser);
 
@@ -180,7 +180,7 @@ public class Login extends JFrame {
             }
         });
         btnCancel.setIcon(
-                new ImageIcon("D:\\SOF203\\JAVA3_PH45758_Assignment\\src\\image\\exit.png"));
+                new ImageIcon("D:\\image\\exit.png"));
         btnCancel.setForeground(Color.BLACK);
         btnCancel.setContentAreaFilled(false);
         btnCancel.setBorder(new LineBorder(Color.DARK_GRAY));
@@ -204,7 +204,7 @@ public class Login extends JFrame {
         JLabel bkg = new JLabel();
         bkg.setBounds(0, 0, 385, 262);
         bkg.setIcon(new ImageIcon(
-                "D:\\SOF203\\JAVA3_PH45758_Assignment\\src\\image\\backLogin.jpg"));
+                "D:\\image\\backLogin.jpg"));
         contentPane.add(bkg);
         loadUser();
     }
