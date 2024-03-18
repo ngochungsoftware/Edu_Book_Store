@@ -4,6 +4,10 @@
  */
 package ui;
 
+import java.text.DateFormat;
+import java.util.Date;
+
+
 /**
  *
  * @author macbook
@@ -39,8 +43,6 @@ public class PhieuNhapView extends javax.swing.JFrame {
         btnXemchitiet = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablePhieuNhap = new javax.swing.JTable();
-        jpTimkiem7 = new javax.swing.JPanel();
-        lbGionhap = new javax.swing.JLabel();
         jpTimkiem6 = new javax.swing.JPanel();
         lbNgaynhap = new javax.swing.JLabel();
         jpTimkiem4 = new javax.swing.JPanel();
@@ -237,30 +239,6 @@ public class PhieuNhapView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TablePhieuNhap);
 
-        jpTimkiem7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giờ Nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(0, 0, 0))); // NOI18N
-        jpTimkiem7.setForeground(new java.awt.Color(0, 0, 0));
-        jpTimkiem7.setToolTipText("");
-        jpTimkiem7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        lbGionhap.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        lbGionhap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jpTimkiem7Layout = new javax.swing.GroupLayout(jpTimkiem7);
-        jpTimkiem7.setLayout(jpTimkiem7Layout);
-        jpTimkiem7Layout.setHorizontalGroup(
-            jpTimkiem7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpTimkiem7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbGionhap, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jpTimkiem7Layout.setVerticalGroup(
-            jpTimkiem7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpTimkiem7Layout.createSequentialGroup()
-                .addComponent(lbGionhap, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         jpTimkiem6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ngày Nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jpTimkiem6.setForeground(new java.awt.Color(0, 0, 0));
         jpTimkiem6.setToolTipText("");
@@ -345,9 +323,7 @@ public class PhieuNhapView extends javax.swing.JFrame {
                 .addComponent(jpTimkiem4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
                 .addComponent(jpTimkiem6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
-                .addComponent(jpTimkiem7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
+                .addGap(383, 383, 383))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -360,12 +336,10 @@ public class PhieuNhapView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 538, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jpTimkiem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpTimkiem6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpTimkiem3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jpTimkiem7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpTimkiem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpTimkiem6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpTimkiem3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(89, 89, 89))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -406,7 +380,19 @@ public class PhieuNhapView extends javax.swing.JFrame {
 
     private void jxTungayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jxTungayActionPerformed
         // TODO add your handling code here:
-       
+//        Date tn = jxTungay.getDate();
+//
+//        DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        if(tn !=null){
+//            tungay = oDateFormat.format(tn);
+//        }
+//        try {
+//            setDataToTable(db.searchTable(tencot,query,tungay,denngay),table);
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//        }
+//        sort();
+
     }//GEN-LAST:event_jxTungayActionPerformed
 
     private void jxTungayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jxTungayKeyReleased
@@ -415,22 +401,32 @@ public class PhieuNhapView extends javax.swing.JFrame {
 
     private void jxDenngayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jxDenngayActionPerformed
         // TODO add your handling code here:
-       
+//        Date dn = jxDenngay.getDate();
+//        DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        if(dn !=null){
+//            denngay = oDateFormat.format(dn);
+//        }
+//        try {
+//            setDataToTable(db.searchTable(tencot,query,tungay,denngay),table);
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//        }
+//        sort();
     }//GEN-LAST:event_jxDenngayActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-      
+     
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnXemchitietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemchitietActionPerformed
         // TODO add your handling code here:
-      
+       
     }//GEN-LAST:event_btnXemchitietActionPerformed
 
     private void TablePhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablePhieuNhapMouseClicked
         // TODO add your handling code here:
-      
+       
     }//GEN-LAST:event_TablePhieuNhapMouseClicked
 
     /**
@@ -483,10 +479,8 @@ public class PhieuNhapView extends javax.swing.JFrame {
     private javax.swing.JPanel jpTimkiem3;
     private javax.swing.JPanel jpTimkiem4;
     private javax.swing.JPanel jpTimkiem6;
-    private javax.swing.JPanel jpTimkiem7;
     private org.jdesktop.swingx.JXDatePicker jxDenngay;
     private org.jdesktop.swingx.JXDatePicker jxTungay;
-    private javax.swing.JLabel lbGionhap;
     private javax.swing.JLabel lbMapn;
     private javax.swing.JLabel lbNgaynhap;
     private javax.swing.JLabel lbTennhanvien;
