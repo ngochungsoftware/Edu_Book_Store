@@ -124,8 +124,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-nbproject/private/private.properties
-nbproject/private/private.xml
+nbproject/
 
 ### oXygenXMLEditor ###
 # oXygen XML Editor by SyncRO Soft SRL
