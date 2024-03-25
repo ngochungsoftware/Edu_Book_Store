@@ -22,7 +22,7 @@ public class jdbcHelper {
     private static final String PASSWORD = "example_123";
     private static final String SERVER = "localhost";
     private static final String PORT = "1433";
-    private static final String DATABASE_NAME = "Edu_Book_Store";
+    private static final String DATABASE_NAME = "Edu_Book_Store1";
     private static final boolean USING_SSL = true;
 
     private static String CONNECT_STRING;
