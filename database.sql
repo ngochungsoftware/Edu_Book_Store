@@ -1,22 +1,22 @@
-﻿use master
-go
+use master
 create database Edu_Book_Store
-go
+
 use Edu_Book_Store
+
+-- Add table
+
 if OBJECT_ID('KhachHang') is not null
 drop table KhachHang
 go
 CREATE table KhachHang 
 (
-	MaKH int identity not null primary key,
-	HoTen nvarchar(50),
-	TaiKhoan varchar(50),
-	MatKhau nvarchar(50),
-	Email nvarchar(100),
+	MaKH varchar(5) primary key,
+	HoTen nvarchar(60),
+	Email varchar(100),
 	DiaChi nvarchar(200),
 	DienThoai varchar(50),
 	GioiTinh nvarchar(3),
-	NgaySinh datetime,
+	NgaySinh date,
 )
 
 
@@ -25,16 +25,15 @@ drop table NhanVien
 go
 CREATE table NhanVien 
 (
-	MaNV int identity not null primary key,
-	HoTen nvarchar(50),
-	TaiKhoan varchar(50),
-	MatKhau nvarchar(50),
-	Email nvarchar(100),
+	MaNV varchar(5) primary key,
+	HoTen nvarchar(60),
+	Email varchar(100),
 	DiaChi nvarchar(200),
 	DienThoai varchar(50),
 	GioiTinh nvarchar(3),
-	NgaySinh datetime,
-	Vaitro nvarchar(50)
+	NgaySinh date,
+	Vaitro nvarchar(50),
+	Luong float
 )
 
 if OBJECT_ID('Voucher') is not null
@@ -42,12 +41,21 @@ drop table Voucher
 go
 create table Voucher
 (
-	MaVoucher int identity primary key,
+	MaVoucher varchar(5) primary key,
 	TenVoucher nvarchar(100),
 	NgayBatDau date,
 	NgayKetThuc date,
-	Giamgia float,
+	LoaiVoucher nvarchar(50),
 	DieuKien nvarchar(100)
+)
+
+if OBJECT_ID('ChiTietVoucher') is not null
+drop table ChiTietVoucher
+go
+create table ChiTietVoucher(
+	MaVoucher varchar(5) not null,
+	MaSach varchar(5) not null,
+	GiamGia float
 )
 
 if OBJECT_ID('Coupon') is not null
@@ -55,7 +63,7 @@ drop table Coupon
 go
 create table Coupon
 (
-	MaCoupon int identity primary key,
+	MaCoupon varchar(5) primary key,
 	TenCoupon nvarchar(100),
 	NgayBatDau date,
 	NgayKetThuc date,
@@ -63,13 +71,13 @@ create table Coupon
 	DieuKien nvarchar(100)
 )
 
-if OBJECT_ID('ChuDe') is not null
-drop table ChuDe
+if OBJECT_ID('TheLoai') is not null
+drop table TheLoai
 go
-CREATE  table ChuDe
+CREATE  table TheLoai
 (
-MaChuDe int identity primary key not null,
-TenChuDe nvarchar(50),
+MaTheLoai varchar(50) primary key,
+TenTheLoai nvarchar(50),
 )
 
 if OBJECT_ID('NhaXuatBan') is not null
@@ -77,10 +85,10 @@ drop table NhaXuatBan
 go
 CREATE table NhaXuatBan 
 (
-	MaNXB int identity primary key,
+	MaNXB varchar(50) primary key,
 	TenNXB nvarchar(50),
 	DiaChi nvarchar(200),
-	DienThoai varchar(50)
+	SoDienThoai varchar(50)
 )
 
 if OBJECT_ID('TacGia') is not null
@@ -88,10 +96,9 @@ drop table TacGia
 go
 CREATE table TacGia 
 (
-	MaTacGia int identity primary key,
+	MaTacGia varchar(50) primary key,
 	TenTacGia nvarchar(50),
 	DiaChi nvarchar(200),
-	TieuSu nvarchar(Max),
 	DienThoai varchar(50)
 )
 
@@ -100,47 +107,31 @@ drop table Sach
 go
 CREATE table Sach 
 (
-	MaSach int identity primary key,
+	MaSach varchar(5) primary key,
 	TenSach nvarchar(50),
-	GiaBan decimal(18,0),
-	MoTa nvarchar(Max),
-	AnhBia nvarchar(50),
-	NgayCapNhat datetime,
-	SoLuongTon int,
-	MaNXB int,
-	MaCoupon int,
-	foreign key (MaCoupon) references Coupon(MaCoupon),
-	MaChuDe int, -- nhieu tac gia viet 1 sach 1 sach nhieu tac gia => tao bang tham gia
+	NamXuatBan int,
+	DonGia float,
+	Anh varchar(50),
+	SoLuong int,
+	MaNXB varchar(50) not null,
+	MaCoupon varchar(5) not null,
+	MaTheLoai varchar(50) not null,
+	MaTacGia varchar(50) not null
 )
 
-if OBJECT_ID('ThamGia') is not null
-drop table ThamGia
+if OBJECT_ID('HoaDon') is not null
+drop table HoaDon
 go
-CREATE TABLE ThamGia
+create table HoaDon
 (
-    MaSach INT,
-    MaTacGia INT,
-    VaiTro NVARCHAR(50),
-    ViTri NVARCHAR(50),
-    PRIMARY KEY (MaSach, MaTacGia)
-);
-
-
-if OBJECT_ID('DonHang') is not null
-drop table DonHang
-go
-create table DonHang
-(
-	MaDonHang int identity primary key,
-	MaNV int,
-	foreign key (MaNV) references NhanVien(MaNV),
-	MaVoucher int,
-	foreign key (MaVoucher) references Voucher(MaVoucher),
-	ThanhToan int ,
-	TinhTrangGiaoHang int,
-	NgayDat datetime,
-	NgayGiao datetime,
-	MaKH int,
+	MaHoaDon varchar(5) primary key,
+	MaNV varchar(5) not null,
+	MaVoucher varchar(5) not null,
+	MaKH varchar(5) not null,
+	NgayLapHoaDon date,
+	TongTien float,
+	GiamGia float,
+	ThanhTien float
 )
 
 if OBJECT_ID('LichSuGia') is not null
@@ -148,207 +139,225 @@ drop table LichSuGia
 go
 create table LichSuGia
 (
-	MaLSG int identity primary key,
-	MaSach int,
-	foreign key (MaSach) references Sach(MaSach),
+	MaLSG varchar(5) primary key,
+	MaSach varchar(5) not null,
 	NgayBatDau date,
 	NgayKetThuc date,
-	GiaBan decimal(18,0),
+	GiaBan float,
 	GhiChu nvarchar(100)
 )
 
-if OBJECT_ID('ChiTietDonHang') is not null
-drop table ChiTietDonHang
+if OBJECT_ID('ChiTietHoaDon') is not null
+drop table ChiTietHoaDon
 go
-create table ChiTietDonHang
+create table ChiTietHoaDon
 (
-	MaLSG int,
-	foreign key (MaLSG) references LichSuGia(MaLSG),
-	MaDonHang int,
-	MaSach int,
+	MaLSG varchar(5) not null,
+	MaHoaDon varchar(5) not null,
+	MaSach varchar(5) not null,
+	TenSach nvarchar(50),
 	SoLuong int,
-	DonGia varchar(max),
-	primary key (MaDonHang, MaSach)
+	DonGia float,
+	GiamGia int,
+	ThanhTien float
 )
+
+if OBJECT_ID('PhieuNhap') is not null
+drop table PhieuNhap
+go
+create table PhieuNhap(
+	MaPN varchar(5) primary key,
+	MaNV varchar(5) not null,
+	MaNCC varchar(5) not null,
+	TrangThai nvarchar(20),
+	TongTien float,
+	NgayNhap date
+)
+
+if OBJECT_ID('ChiTietPhieuNhap') is not null
+drop table ChiTietPhieuNhap
+go
+create table ChiTietPhieuNhap(
+	MaCTPN varchar(5) primary key,
+	MaPN varchar(5) not null,
+	MaSach varchar(5) not null,
+	DonGia int,
+	SoLuong int,
+	ThanhTien int
+)
+
+if OBJECT_ID('NhaCungCap') is not null
+drop table NhaCungCap
+go
+create table NhaCungCap(
+	MaNCC varchar(5) primary key,
+	TenNCC nvarchar(255),
+	DIaChi nvarchar(255)
+)
+
+if OBJECT_ID('TaiKhoan') is not null
+drop table TaiKhoan
+go
+create table TaiKhoan(
+	TenTaiKhoan varchar(255) primary key,
+	MaNV varchar(5) not null,
+	MaTK varchar(5) not null,
+	MatKhau varchar(50),
+	Quyen nvarchar(30),
+	TrangThai nvarchar(50)
+)
+
+-- Insert table
+
+INSERT INTO NhaXuatBan (MaNXB, TenNXB, DiaChi, SoDienThoai)
+VALUES
+    ('NXB1',N'Nhà xuất bản A', N'Địa chỉ A', '0123456789'),
+    ('NXB2',N'Nhà xuất bản B', N'Địa chỉ B', '0987654321'),
+    ('NXB3',N'Nhà xuất bản C', N'Địa chỉ C', '0123987654');
+
+INSERT INTO TheLoai(MaTheLoai, TenTheLoai)
+VALUES
+    ('TL1',N'Chủ đề 1'),
+    ('TL2',N'Chủ đề 2'),
+    ('TL3',N'Chủ đề 3');
+
+INSERT INTO TacGia (MaTacGia, TenTacGia, DiaChi, DienThoai)
+VALUES
+    ('TG1',N'Tác giả A', N'Địa chỉ A', '0123456789'),
+    ('TG2',N'Tác giả B', N'Địa chỉ B', '0987654321'),
+    ('TG3',N'Tác giả C', N'Địa chỉ C', '0123987654');
+
+
+INSERT INTO KhachHang (MaKH, HoTen, Email, DiaChi, DienThoai, GioiTinh, NgaySinh)
+VALUES   ('KH1',N'Nguyễn Văn A', 'nguyenvana@fpt.edu.vn', N'123 Đường A, Quận 1, TP.HCM', '1234567890', N'Nam', '1990-01-01'),
+    ('KH2',N'Nguyễn Thị B', 'nguyenthib@fpt.edu.vn', N'456 Đường B, Quận 2, TP.HCM', '9876543210', N'Nữ', '1995-05-10'),
+    ('KH3',N'Trần Văn C', 'tranvanc@fpt.edu.vn', N'789 Đường C, Quận 3, TP.HCM', '5551234567', N'Nam', '1985-09-15');
+
+INSERT INTO NhaCungCap (MaNCC, TenNCC, DIaChi)
+VALUES
+	('NCC1',N'Nhà cung cấp 1', 'Địa chỉ 1'),
+	('NCC2',N'Nhà cung cấp 2', 'Địa chỉ 2'),
+	('NCC3',N'Nhà cung cấp 3', 'Địa chỉ 3');
+
+INSERT INTO NhanVien (MaNV, HoTen, Email, DiaChi, DienThoai, GioiTinh, NgaySinh, Vaitro, Luong)
+VALUES 
+    ('NV1',N'Tên nhân viên 1', 'email1@example.com', N'Địa chỉ 1', '1234567890', N'Nam', '2000-01-01', N'Quản trị viên', 25000),
+	('NV2',N'Tên nhân viên 2', 'email1@example.com', N'Địa chỉ 2', '1234567891', N'Nữ', '1991-01-01', N'Quản lý', 35000),
+    ('NV3',N'Tên nhân viên 3', 'email1@example.com', N'Địa chỉ 3', '1234567892', N'Nam', '2001-01-01', N'Nhân viên', 45000);
+
+INSERT INTO TaiKhoan (TenTaiKhoan, MaNV, MaTK, MatKhau, Quyen, TrangThai)
+VALUES
+	('Admin', 'NV1', '1','1234',N'Quản trị viên','Đang hoạt động'),
+	('quanly', 'NV2','2','qlch',N'Quản lý','Đang hoạt động'),
+	('mailanhanvien', 'NV3','3','mmlnv',N'Nhân viên','Tạm dừng hoạt động');
+
+INSERT INTO Voucher (MaVoucher,TenVoucher, NgayBatDau, NgayKetThuc, LoaiVoucher, DieuKien)
+VALUES
+    ('VC1',N'Voucher 1', '2024-03-01', '2024-03-31', N'Loai 1', N'Áp dụng cho đơn hàng trên 500.000 đồng'),
+    ('VC2',N'Voucher 2', '2024-04-01', '2024-04-30', N'Loai 2', N'Áp dụng cho sản phẩm danh mục A'),
+    ('VC3',N'Voucher 3', '2024-05-01', '2024-05-31', N'Loai 3', N'Áp dụng cho thành viên VIP');
+
+INSERT INTO Sach (MaSach,TenSach, NamXuatBan, DonGia, Anh, SoLuong, MaNXB, MaCoupon, MaTheLoai, MaTacGia)
+VALUES
+    ('S1',N'Tên sách 1', 2004, 150.0, 'anh1', 10, 'NXB1', 'C1', 'TL1', 'TG1'),
+    ('S2',N'Tên sách 2', 2003, 345.0, 'anh2', 20, 'NXB2', 'C2', 'TL2', 'TG2'),
+	('S3',N'Tên sách 3', 2002, 350.0, 'anh3', 30, 'NXB3', 'C3', 'TL3', 'TG3');
+
+INSERT INTO ChiTietVoucher (MaVoucher, MaSach, GiamGia)
+VALUES
+	('VC1','S1',12.0),
+	('VC2','S2',24.0),
+	('VC3','S3',67.0);
+
+INSERT INTO Coupon (MaCoupon, TenCoupon, NgayBatDau, NgayKetThuc, Quatang, DieuKien)
+VALUES
+    ('C1',N'Coupon 1', '2024-03-01', '2024-03-31', N'Quà tặng A', N'Áp dụng cho đơn hàng trên 500.000 đồng'),
+    ('C2',N'Coupon 2', '2024-04-01', '2024-04-30', N'Quà tặng B', N'Áp dụng cho sản phẩm danh mục X'),
+    ('C3',N'Coupon 3', '2024-05-01', '2024-05-31', N'Quà tặng C', N'Áp dụng cho thành viên VIP');
+
+INSERT INTO PhieuNhap (MaPN, MaNV, MaNCC, TrangThai, TongTien, NgayNhap)
+VALUES	
+	('PN1', 'NV1', 'NCC1', N'Hoàn Thành',1000000.0, '2024-03-20'),
+	('PN2', 'NV3', 'NCC2', N'Chưa hoàn thành',500000.0, '2024-03-10'),
+	('PN3', 'NV2', 'NCC3', N'Hoàn Thành',1500000.0, '2024-03-15');
+
+INSERT INTO ChiTietPhieuNhap (MaCTPN, MaPN, MaSach, DonGia, SoLuong, ThanhTien)
+VALUES
+	('CTPN1','PN1','S1',100000.0, 10, 1000000.0),
+	('CTPN2','PN3','S2',150000.0, 5, 750000.0),
+	('CTPN3','PN3','S3',150000.0, 5, 750000.0);
+
+INSERT INTO HoaDon (MaHoaDon, MaNV, MaVoucher, MaKH, NgayLapHoaDon, TongTien, GiamGia, ThanhTien)
+VALUES
+    ('HD1', 'NV1', 'VC1', 'KH1', '2022-01-01', 150.0, 50.0, 100),
+    ('HD2', 'NV2', 'VC2', 'KH2', '2022-01-02', 270.0, 20.0, 250.0),
+	('HD3', 'NV3', 'VC3', 'KH3', '2022-01-03', 50.0, 25.0, 25.0);
+
+INSERT INTO LichSuGia (MaLSG, MaSach, NgayBatDau, NgayKetThuc, GiaBan, GhiChu)
+VALUES
+    ('LSG1', 'S1', '2022-01-01', '2022-01-31', 100.0, N'Giá không đổi'),
+    ('LSG2', 'S1', '2022-02-01', '2022-02-28', 150.0, N'Giá có tăng đôi phần'),
+	('LSG3', 'S2', '2022-02-01', '2022-02-28', 345.0, N'Giá không đổi');
+
+INSERT INTO ChiTietHoaDon (MaLSG, MaHoaDon, MaSach, TenSach, SoLuong, DonGia, GiamGia, ThanhTien)
+VALUES
+    ('LSG1', 'HD1', 'S1', N'Tên Sách 1', 1, 100.0, 50.0, 50.0),
+    ('LSG2', 'HD2', 'S1', N'Tên Sách 1', 1, 150.0, 20.0, 130.0),
+    ('LSG3', 'HD3', 'S2', N'Tên Sách 2', 1, 345.0, 25.0, 325.0);
+
+
+-- Add constraint
 
 ALTER TABLE Sach
 ADD CONSTRAINT FK_NhaXB_Sach FOREIGN KEY (MaNXB) REFERENCES NhaXuatBan(MaNXB);
 
 ALTER TABLE Sach
-ADD CONSTRAINT FK_ChuDe_Sach FOREIGN KEY (MaChuDe) REFERENCES ChuDe(MaChude);
+ADD CONSTRAINT FK_TheLoai_Sach FOREIGN KEY (MaTheLoai) REFERENCES TheLoai(MaTheLoai);
 
-ALTER TABLE ChiTietDonHang 
-ADD CONSTRAINT FK_Sach_ChiTietDonHang FOREIGN KEY (MaSach) REFERENCES Sach(MaSach);
+ALTER TABLE Sach
+ADD CONSTRAINT FK_TacGia_Sach FOREIGN KEY (MaTacGia) REFERENCES TacGia(MaTacGia);
 
-ALTER TABLE ChiTietDonHang 
-ADD CONSTRAINT FK_DonHang_ChiTietDonHang FOREIGN KEY (MaDonHang) REFERENCES DonHang(MaDonHang);
+ALTER TABLE Sach
+ADD CONSTRAINT FK_Coupon_Sach FOREIGN KEY (MaCoupon) REFERENCES Coupon(MaCoupon);
 
-ALTER TABLE DonHang
-ADD CONSTRAINT FK_KhachHang_DonHang FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH);
+ALTER TABLE LichSuGia
+ADD CONSTRAINT FK_Sach_LichSuGia FOREIGN KEY (MaSach) REFERENCES Sach(MaSach);
 
-ALTER TABLE ThamGia
-ADD CONSTRAINT FK_Sach_ThamGia FOREIGN KEY (MaSach) REFERENCES Sach(MaSach),
-    CONSTRAINT FK_TacGia_ThamGia FOREIGN KEY (MaTacGia) REFERENCES TacGia(MaTacGia);
+ALTER TABLE ChiTietVoucher
+ADD CONSTRAINT FK_Sach_CTVoucher FOREIGN KEY (MaSach) REFERENCES Sach(MaSach);
 
+ALTER TABLE ChiTietVoucher
+ADD CONSTRAINT FK_MaVoucher_CTVoucher FOREIGN KEY (MaVoucher) REFERENCES Voucher(MaVoucher);
 
+ALTER TABLE ChiTietHoaDon 
+ADD CONSTRAINT FK_Sach_ChiTietHoaDon FOREIGN KEY (MaSach) REFERENCES Sach(MaSach);
 
-	INSERT INTO KhachHang (HoTen, TaiKhoan, MatKhau, Email, DiaChi, DienThoai, GioiTinh, NgaySinh)
-VALUES   (N'Nguyễn Văn A', 'nguyenvana', 'password1', 'nguyenvana@fpt.edu.vn', N'123 Đường A, Quận 1, TP.HCM', '1234567890', N'Nam', '1990-01-01'),
-    (N'Nguyễn Thị B', 'nguyenthib', 'password2', 'nguyenthib@fpt.edu.vn', N'456 Đường B, Quận 2, TP.HCM', '9876543210', N'Nữ', '1995-05-10'),
-    (N'Trần Văn C', 'tranvanc', 'password3', 'tranvanc@fpt.edu.vn', N'789 Đường C, Quận 3, TP.HCM', '5551234567', N'Nam', '1985-09-15'),
-    (N'Lê Thị D', 'lethid', 'password4', 'lethid@fpt.edu.vn', N'321 Đường D, Quận 4, TP.HCM', '8889876543', N'Nữ', '1992-07-20'),
-    (N'Phạm Văn E', 'phamvane', 'password5', 'phamvane@fpt.edu.vn', N'567 Đường E, Quận 5, TP.HCM', '1112223333', N'Nam', '1988-03-05'),
-    (N'Huỳnh Thị F', 'huynhthif', 'password6', 'huynhthif@fpt.edu.vn', N'654 Đường F, Quận 6, TP.HCM', '9998887777', N'Nữ', '1997-11-25'),
-    (N'Võ Văn G', 'vovang', 'password7', 'vovang@fpt.edu.vn', N'876 Đường G, Quận 7, TP.HCM', '4445556666', N'Nam', '1991-04-12'),
-    (N'Dương Thị H', 'duongthih', 'password8', 'duongthih@fpt.edu.vn', N'987 Đường H, Quận 8, TP.HCM', '7778889999', N'Nữ', '1987-08-30'),
-    (N'Hoàng Văn I', 'hoangvani', 'password9', 'hoangvani@fpt.edu.vn', N'234 Đường I, Quận 9, TP.HCM', '2223334444', N'Nam', '1994-02-18'),
-    (N'Nguyễn Thị K', 'nguyenthik', 'password10', 'nguyenthik@fpt.edu.vn', N'543 Đường J, Quận 10, TP.HCM', '6667778888', N'Nữ', '1999-06-08');
+ALTER TABLE ChiTietHoaDon 
+ADD CONSTRAINT FK_HoaDon_ChiTietHoaDon FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon);
 
-	select * from KhachHang
+ALTER TABLE ChiTietHoaDon 
+ADD CONSTRAINT FK_LichSuGia_ChiTietHoaDon FOREIGN KEY (MaLSG) REFERENCES LichSuGia(MaLSG);
 
-INSERT INTO NhanVien (HoTen, TaiKhoan, MatKhau, Email, DiaChi, DienThoai, GioiTinh, NgaySinh, Vaitro)
-VALUES 
-    (N'Tên nhân viên 1', 'taiKhoan1', N'matKhau1', 'email1@example.com', N'Địa chỉ 1', '1234567890', N'Nam', '2000-01-01', N'Vai tro 1'),
-    (N'Tên nhân viên 2', 'taiKhoan2', N'matKhau2', 'email2@example.com', N'Địa chỉ 2', '0987654321', N'Nữ', '1995-05-10', N'Vai tro 2'),
-    (N'Tên nhân viên 3', 'taiKhoan3', N'matKhau3', 'email3@example.com', N'Địa chỉ 3', '9876543210', N'Nam', '1998-12-25', N'Vai tro 3'),
-    (N'Tên nhân viên 4', 'taiKhoan4', N'matKhau4', 'email4@example.com', N'Địa chỉ 4', '0123456789', N'Nữ', '1990-06-15', N'Vai tro 4'),
-    (N'Tên nhân viên 5', 'taiKhoan5', N'matKhau5', 'email5@example.com', N'Địa chỉ 5', '1111111111', N'Nam', '1985-03-20', N'Vai tro 5'),
-    (N'Tên nhân viên 6', 'taiKhoan6', N'matKhau6', 'email6@example.com', N'Địa chỉ 6', '2222222222', N'Nữ', '1992-09-08', N'Vai tro 6'),
-    (N'Tên nhân viên 7', 'taiKhoan7', N'matKhau7', 'email7@example.com', N'Địa chỉ 7', '3333333333', N'Nam', '1997-07-05', N'Vai tro 7'),
-    (N'Tên nhân viên 8', 'taiKhoan8', N'matKhau8', 'email8@example.com', N'Địa chỉ 8', '4444444444', N'Nữ', '1993-11-12', N'Vai tro 8'),
-    (N'Tên nhân viên 9', 'taiKhoan9', N'matKhau9', 'email9@example.com', N'Địa chỉ 9', '5555555555', N'Nam', '1996-04-30', N'Vai tro 9'),
-    (N'Tên nhân viên 10', 'taiKhoan10', N'matKhau10', 'email10@example.com', N'Địa chỉ 10', '6666666666', N'Nữ', '1994-08-18', N'Vai tro 10');
+ALTER TABLE HoaDon
+ADD CONSTRAINT FK_KhachHang_HoaDon FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH);
 
-INSERT INTO Voucher (TenVoucher, NgayBatDau, NgayKetThuc, Giamgia, DieuKien)
-VALUES
-    (N'Voucher 1', '2024-03-01', '2024-03-31', 10.5, N'Áp dụng cho đơn hàng trên 500.000 đồng'),
-    (N'Voucher 2', '2024-04-01', '2024-04-30', 15.2, N'Áp dụng cho sản phẩm danh mục A'),
-    (N'Voucher 3', '2024-05-01', '2024-05-31', 20.7, N'Áp dụng cho thành viên VIP'),
-    (N'Voucher 4', '2024-06-01', '2024-06-30', 12.8, N'Áp dụng cho đơn hàng trên 1.000.000 đồng'),
-    (N'Voucher 5', '2024-07-01', '2024-07-31', 18.6, N'Áp dụng cho sản phẩm danh mục B'),
-    (N'Voucher 6', '2024-08-01', '2024-08-31', 25.3, N'Áp dụng cho đơn hàng trên 800.000 đồng'),
-    (N'Voucher 7', '2024-09-01', '2024-09-30', 14.9, N'Áp dụng cho sản phẩm danh mục C'),
-    (N'Voucher 8', '2024-10-01', '2024-10-31', 21.4, N'Áp dụng cho đơn hàng trên 700.000 đồng'),
-    (N'Voucher 9', '2024-11-01', '2024-11-30', 17.2, N'Áp dụng cho sản phẩm danh mục D'),
-    (N'Voucher 10', '2024-12-01', '2024-12-31', 23.8, N'Áp dụng cho đơn hàng trên 900.000 đồng');
+ALTER TABLE HoaDon
+ADD CONSTRAINT FK_Voucher_HoaDon FOREIGN KEY (MaVoucher) REFERENCES Voucher(MaVoucher);
 
-INSERT INTO Coupon (TenCoupon, NgayBatDau, NgayKetThuc, Quatang, DieuKien)
-VALUES
-    (N'Coupon 1', '2024-03-01', '2024-03-31', N'Quà tặng A', N'Áp dụng cho đơn hàng trên 500.000 đồng'),
-    (N'Coupon 2', '2024-04-01', '2024-04-30', N'Quà tặng B', N'Áp dụng cho sản phẩm danh mục X'),
-    (N'Coupon 3', '2024-05-01', '2024-05-31', N'Quà tặng C', N'Áp dụng cho thành viên VIP'),
-    (N'Coupon 4', '2024-06-01', '2024-06-30', N'Quà tặng D', N'Áp dụng cho đơn hàng trên 1.000.000 đồng'),
-    (N'Coupon 5', '2024-07-01', '2024-07-31', N'Quà tặng E', N'Áp dụng cho sản phẩm danh mục Y'),
-    (N'Coupon 6', '2024-08-01', '2024-08-31', N'Quà tặng F', N'Áp dụng cho đơn hàng trên 800.000 đồng'),
-    (N'Coupon 7', '2024-09-01', '2024-09-30', N'Quà tặng G', N'Áp dụng cho sản phẩm danh mục Z'),
-    (N'Coupon 8', '2024-10-01', '2024-10-31', N'Quà tặng H', N'Áp dụng cho đơn hàng trên 700.000 đồng'),
-    (N'Coupon 9', '2024-11-01', '2024-11-30', N'Quà tặng I', N'Áp dụng cho sản phẩm danh mục W'),
-    (N'Coupon 10', '2024-12-01', '2024-12-31', N'Quà tặng J', N'Áp dụng cho đơn hàng trên 900.000 đồng');
+ALTER TABLE HoaDon
+ADD CONSTRAINT FK_NhanVien_HoaDon FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV);
 
-INSERT INTO ChuDe (TenChuDe)
-VALUES
-    (N'Chủ đề 1'),
-    (N'Chủ đề 2'),
-    (N'Chủ đề 3'),
-    (N'Chủ đề 4'),
-    (N'Chủ đề 5'),
-    (N'Chủ đề 6'),
-    (N'Chủ đề 7'),
-    (N'Chủ đề 8'),
-    (N'Chủ đề 9'),
-    (N'Chủ đề 10');
+ALTER TABLE ChiTietPhieuNhap
+ADD CONSTRAINT FK_Sach_CTPN FOREIGN KEY (MaSach) REFERENCES Sach(MaSach);
 
-	select * from ChuDe
+ALTER TABLE ChiTietPhieuNhap
+ADD CONSTRAINT FK_PN_CTPN FOREIGN KEY (MaPN) REFERENCES PhieuNhap(MaPN);
 
-INSERT INTO NhaXuatBan (TenNXB, DiaChi, DienThoai)
-VALUES
-    (N'Nhà xuất bản A', N'Địa chỉ A', '0123456789'),
-    (N'Nhà xuất bản B', N'Địa chỉ B', '0987654321'),
-    (N'Nhà xuất bản C', N'Địa chỉ C', '0123987654'),
-    (N'Nhà xuất bản D', N'Địa chỉ D', '0987123456'),
-    (N'Nhà xuất bản E', N'Địa chỉ E', '0123456798'),
-    (N'Nhà xuất bản F', N'Địa chỉ F', '0987654390'),
-    (N'Nhà xuất bản G', N'Địa chỉ G', '0123456821'),
-    (N'Nhà xuất bản H', N'Địa chỉ H', '0987603214'),
-    (N'Nhà xuất bản I', N'Địa chỉ I', '0123456876'),
-    (N'Nhà xuất bản J', N'Địa chỉ J', '0987654320');
+ALTER TABLE PhieuNhap
+ADD CONSTRAINT FK_NhanVien_PN FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV);
 
+ALTER TABLE PhieuNhap
+ADD CONSTRAINT FK_NhaCungCap_PN FOREIGN KEY (MaNCC) REFERENCES NhaCungCap(MaNCC);
 
-INSERT INTO TacGia (TenTacGia, DiaChi, TieuSu, DienThoai)
-VALUES
-    (N'Tác giả A', N'Địa chỉ A', N'Tiểu sử A', '0123456789'),
-    (N'Tác giả B', N'Địa chỉ B', N'Tiểu sử B', '0987654321'),
-    (N'Tác giả C', N'Địa chỉ C', N'Tiểu sử C', '0123987654'),
-    (N'Tác giả D', N'Địa chỉ D', N'Tiểu sử D', '0987123456'),
-    (N'Tác giả E', N'Địa chỉ E', N'Tiểu sử E', '0123456798'),
-    (N'Tác giả F', N'Địa chỉ F', N'Tiểu sử F', '0987654390'),
-    (N'Tác giả G', N'Địa chỉ G', N'Tiểu sử G', '0123456821'),
-    (N'Tác giả H', N'Địa chỉ H', N'Tiểu sử H', '0987603214'),
-    (N'Tác giả I', N'Địa chỉ I', N'Tiểu sử I', '0123456876'),
-    (N'Tác giả J', N'Địa chỉ J', N'Tiểu sử J', '0987654320');
-
-INSERT INTO Sach (TenSach, GiaBan, MoTa, AnhBia, NgayCapNhat, SoLuongTon, MaNXB, MaCoupon, MaChuDe)
-VALUES
-    (N'Tên sách 1', 100000, N'Mô tả sách 1', N'anhbia1.jpg', '2022-01-01', 50, 1, 1, 1),
-    (N'Tên sách 2', 150000, N'Mô tả sách 2', N'anhbia2.jpg', '2022-01-02', 30, 2, 2, 2),
-    (N'Tên sách 3', 200000, N'Mô tả sách 3', N'anhbia3.jpg', '2022-01-03', 20, 3, 3, 3),
-    (N'Tên sách 4', 120000, N'Mô tả sách 4', N'anhbia4.jpg', '2022-01-04', 40, 4, 4, 4),
-    (N'Tên sách 5', 180000, N'Mô tả sách 5', N'anhbia5.jpg', '2022-01-05', 25, 5, 5, 5),
-    (N'Tên sách 6', 90000, N'Mô tả sách 6', N'anhbia6.jpg', '2022-01-06', 35, 6, 6, 6),
-    (N'Tên sách 7', 160000, N'Mô tả sách 7', N'anhbia7.jpg', '2022-01-07', 15, 7, 7, 7),
-    (N'Tên sách 8', 140000, N'Mô tả sách 8', N'anhbia8.jpg', '2022-01-08', 55, 8, 8, 8),
-    (N'Tên sách 9', 110000, N'Mô tả sách 9', N'anhbia9.jpg', '2022-01-09', 45, 9, 9, 9),
-    (N'Tên sách 10', 130000, N'Mô tả sách 10', N'anhbia10.jpg', '2022-01-10', 60, 10, 10, 10);
-
-INSERT INTO ThamGia (MaSach, MaTacGia, VaiTro, ViTri)
-VALUES
-    (1, 1, N'Tác giả chính', N'Viết chính'),
-    (1, 2, N'Tác giả phụ', N'Dịch thuật'),
-    (2, 3, N'Tác giả chính', N'Viết chính'),
-    (2, 4, N'Tác giả phụ', N'Viết phụ'),
-    (3, 5, N'Tác giả chính', N'Viết chính'),
-    (3, 6, N'Tác giả phụ', N'Viết phụ'),
-    (4, 7, N'Tác giả chính', N'Viết chính'),
-    (4, 8, N'Tác giả phụ', N'Viết phụ'),
-    (5, 9, N'Tác giả chính', N'Viết chính'),
-    (5, 10, N'Tác giả phụ', N'Viết phụ');
-
-INSERT INTO DonHang (MaNV, MaVoucher, ThanhToan, TinhTrangGiaoHang, NgayDat, NgayGiao, MaKH)
-VALUES
-    (1, 1, 1, 1, '2022-01-01', '2022-01-02', 1),
-    (2, 2, 1, 0, '2022-01-02', '2022-01-03', 2),
-    (3, 3, 0, 1, '2022-01-03', '2022-01-04', 3),
-    (4, 4, 1, 1, '2022-01-04', '2022-01-05', 4),
-    (5, 5, 1, 0, '2022-01-05', '2022-01-06', 5),
-    (6, 6, 0, 1, '2022-01-06', '2022-01-07', 6),
-    (7, 7, 1, 1, '2022-01-07', '2022-01-08', 7),
-    (8, 8, 1, 0, '2022-01-08', '2022-01-09', 8),
-    (9, 9, 0, 1, '2022-01-09', '2022-01-10', 9),
-    (10, 10, 1, 1, '2022-01-10', '2022-01-11', 10);
-
-INSERT INTO LichSuGia (MaSach, NgayBatDau, NgayKetThuc, GiaBan, GhiChu)
-VALUES
-    (1, '2022-01-01', '2022-01-31', 100000, N'Giá ban đầu'),
-    (1, '2022-02-01', '2022-02-28', 90000, N'Giảm giá'),
-    (1, '2022-03-01', '2022-03-31', 95000, N'Tăng giá'),
-    (2, '2022-01-01', '2022-01-31', 80000, N'Giá ban đầu'),
-    (2, '2022-02-01', '2022-02-28', 75000, N'Giảm giá'),
-    (2, '2022-03-01', '2022-03-31', 78000, N'Tăng giá'),
-    (3, '2022-01-01', '2022-01-31', 120000, N'Giá ban đầu'),
-    (3, '2022-02-01', '2022-02-28', 115000, N'Giảm giá'),
-    (3, '2022-03-01', '2022-03-31', 118000, N'Tăng giá'),
-    (4, '2022-01-01', '2022-01-31', 75000, N'Giá ban đầu');
-
-INSERT INTO ChiTietDonHang (MaLSG, MaDonHang, MaSach, SoLuong, DonGia)
-VALUES
-    (1, 1, 1, 2, '100000'),
-    (2, 1, 2, 1, '90000'),
-    (3, 1, 3, 3, '95000'),
-    (4, 2, 1, 1, '80000'),
-    (5, 2, 2, 2, '75000'),
-    (6, 2, 3, 1, '78000'),
-    (7, 3, 1, 2, '120000'),
-    (8, 3, 2, 3, '115000'),
-    (9, 3, 3, 1, '118000'),
-    (10, 4, 1, 1, '75000');
-
+ALTER TABLE TaiKhoan
+ADD CONSTRAINT FK_NhanVien_TaiKhoan FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV);
