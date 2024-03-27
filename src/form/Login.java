@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package user;
+package form;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
@@ -16,26 +16,27 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import entity.NhanVien;
+import dao.NhanVienDAO;
+
 /**
  *
  * @author ADMIN
  */
 public class Login extends javax.swing.JFrame {
 
-    private JPanel contentPane;
-    private JTextField textUsername;
-    private JPasswordField textPassword;
-    static Login frame = new Login();
-    JButton btnLog = new JButton("Login ");
-    StringBuilder error = new StringBuilder();
-    ArrayList<NhanVien> listNV = new ArrayList<NhanVien>();
-    boolean login = false;
-    static String vaiTro;
+    private JTextField txtUsername;
+    private JPasswordField txtPassword;
+    private JButton btnLog;
+    private JButton btnCancel;
+    private ArrayList<NhanVien> listNV = new ArrayList<NhanVien>();
+    private static String vaiTro;
 
     public static void mainLogin() {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    Login frame = new Login();
                     frame.setVisible(true);
                     frame.setTitle("Login");
                     frame.setLocationRelativeTo(null);
@@ -49,41 +50,98 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-        textUsername.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (textUsername.getText().equals(" Username")) {
-                    textUsername.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (textUsername.getText().equals("")) {
-                    textUsername.setText(" Username");
-                }
-            }
-        });
-
-        textPassword.addFocusListener(new FocusAdapter() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (textPassword.getText().equals(" Password")) {
-                    textPassword.setText("");
-                }
-            }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (textPassword.getText().equals("")) {
-                    textPassword.setText(" Password");
-                }
-            }
-        });
         loadNV();
     }
+        private void initComponents() {
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridLayout(1, 2));
+
+        JPanel jPanel1 = new JPanel();
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        getContentPane().add(jPanel1);
+
+        JPanel jPanel2 = new JPanel();
+        jPanel2.setBackground(new java.awt.Color(102, 102, 255));
+        getContentPane().add(jPanel2);
+
+        txtUsername = new JTextField("Username");
+        txtUsername.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtUsername.getText().equals("Username")) {
+                    txtUsername.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (txtUsername.getText().equals("")) {
+                    txtUsername.setText("Username");
+                }
+            }
+        });
+        jPanel2.add(txtUsername);
+
+        txtPassword = new JPasswordField("Password");
+        txtPassword.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(txtPassword.getPassword()).equals("Password")) {
+                    txtPassword.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(txtPassword.getPassword()).equals("")) {
+                    txtPassword.setText("Password");
+                }
+            }
+        });
+        jPanel2.add(txtPassword);
+
+        btnLog = new JButton("Login");
+        btnLog.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                login();
+            }
+        });
+        jPanel2.add(btnLog);
+
+        btnCancel = new JButton("Cancel");
+        jPanel2.add(btnCancel);
+    }
+
+    public void loadNV() {
+        try {
+            listNV = NhanVienDAO.loadNV();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void login() {
+        boolean showMessage = false;
+        boolean login = false;
+        String TaiKhoan = txtUsername.getText();
+        String MatKhau = String.valueOf(txtPassword.getPassword());
+
+        for (NhanVien nv : listNV) {
+            if (nv.TaiKhoan.equals(TaiKhoan) && nv.MatKhau.equals(MatKhau)) {
+                login = true;
+                vaiTro = nv.Vaitro;
+                showMessage = true;
+                break;
+            }
+        }
+
+        if (showMessage) {
+            JOptionPane.showMessageDialog(this, "Login successfully!");
+            //Form quản lý với đối tượng quản lý truy xuất đến...
+        } else {
+            JOptionPane.showMessageDialog(this, "Login Failed!");
+        }
+    };
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,7 +155,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
@@ -117,9 +174,6 @@ public class Login extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logobook.png"))); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logobook.png"))); // NOI18N
-        jLabel6.setText("jLabel6");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -131,19 +185,15 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(jLabel5)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addGap(23, 23, 23)
-                .addComponent(jLabel6)
-                .addGap(1869, 1869, 1869)
+                .addGap(2024, 2024, 2024)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1340, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -237,48 +287,11 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        txtPassword.addActionListener(loginAction);
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        txtPassword.addActionListener(loginAction);
     }//GEN-LAST:event_txtUsernameActionPerformed
-    public void loadNV() {
-        try {
-            listNV = NhanVien.loadNV();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public void login() {
-        boolean showMessage = false;
-        login = false;
-        String username = textUsername.getText();
-        @SuppressWarnings("deprecation")
-        String password = textPassword.getText();
-
-        for (NhanVien nv : listNV) {
-            if (nv.username.equals(username) && nv.password.equals(password)) {
-                login = true;
-                vaiTro = nv.vaiTro;
-                showMessage = true;
-                break;
-            }
-        }
-
-        if (showMessage) {
-            JOptionPane.showMessageDialog(this, "Login successfully!");
-            QLNV qlnv = new QLNV();
-            qlnv.mainQLNV();
-        } else {
-            JOptionPane.showMessageDialog(this, "Login Failed!");
-        }
-    }
+    
 
     /**
      * @param args the command line arguments
@@ -323,7 +336,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField txtPassword;

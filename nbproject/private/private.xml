@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ADMIN/Edu_Book_Store/src/dao/PulisherDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Edu_Book_Store/src/dao/RegularDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Edu_Book_Store/src/dao/SalesPersonDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Edu_Book_Store/src/dao/SalesSlipDAO.java</file>
             <file>file:/C:/Users/ADMIN/Edu_Book_Store/src/form/Login.java</file>
+            <file>file:/C:/Users/ADMIN/Edu_Book_Store/src/dao/SupplierDAO.java</file>
         </group>
     </open-files>
 </project-private>
