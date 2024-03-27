@@ -1,16 +1,18 @@
-
-package dao;
-
-
+package entity;
+import java.util.Date;
 public class Coupon {
-    int maCoupon;
-    String tenCoupon;
-    String ngayBatDau;
-    String ngayKetThuc;
-    String quaTang;
-    String dieuKien;
 
-    public Coupon(int maCoupon, String tenCoupon, String ngayBatDau, String ngayKetThuc, String quaTang, String dieuKien) {
+    private String maCoupon;
+    private String tenCoupon;
+    private Date ngayBatDau;
+    private Date ngayKetThuc;
+    private String quaTang;
+    private String dieuKien;
+
+    public Coupon() {
+    }
+
+    public Coupon(String maCoupon, String tenCoupon, Date ngayBatDau, Date ngayKetThuc, String quaTang, String dieuKien) {
         this.maCoupon = maCoupon;
         this.tenCoupon = tenCoupon;
         this.ngayBatDau = ngayBatDau;
@@ -19,14 +21,11 @@ public class Coupon {
         this.dieuKien = dieuKien;
     }
 
-    public Coupon() {
-    }
-
-    public int getMaCoupon() {
+    public String getMaCoupon() {
         return maCoupon;
     }
 
-    public void setMaCoupon(int maCoupon) {
+    public void setMaCoupon(String maCoupon) {
         this.maCoupon = maCoupon;
     }
 
@@ -38,19 +37,19 @@ public class Coupon {
         this.tenCoupon = tenCoupon;
     }
 
-    public String getNgayBatDau() {
+    public Date getNgayBatDau() {
         return ngayBatDau;
     }
 
-    public void setNgayBatDau(String ngayBatDau) {
+    public void setNgayBatDau(Date ngayBatDau) {
         this.ngayBatDau = ngayBatDau;
     }
 
-    public String getNgayKetThuc() {
+    public Date getNgayKetThuc() {
         return ngayKetThuc;
     }
 
-    public void setNgayKetThuc(String ngayKetThuc) {
+    public void setNgayKetThuc(Date ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
     }
 
@@ -74,5 +73,7 @@ public class Coupon {
     public String toString() {
         return "Coupon{" + "maCoupon=" + maCoupon + ", tenCoupon=" + tenCoupon + ", ngayBatDau=" + ngayBatDau + ", ngayKetThuc=" + ngayKetThuc + ", quaTang=" + quaTang + ", dieuKien=" + dieuKien + '}';
     }
-    
+
+   
+
 }
