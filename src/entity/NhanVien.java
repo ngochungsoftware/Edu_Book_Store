@@ -9,16 +9,16 @@ package entity;
  * @author ADMIN
  */
 public class NhanVien {
-    public int MaNV;
-    public String HoTen;
-    public String TaiKhoan;
-    public String MatKhau;
-    public String Email;
-    public String DiaChi;
-    public String DienThoai;
-    public String GioiTinh;
-    public String NgaySinh;
-    public String Vaitro;
+    private int MaNV;
+    private String HoTen;
+    private String TaiKhoan;
+    private String MatKhau;
+    private String Email;
+    private String DiaChi;
+    private String DienThoai;
+    private String GioiTinh;
+    private String NgaySinh;
+    private String Vaitro;
 
     public NhanVien() {
     }

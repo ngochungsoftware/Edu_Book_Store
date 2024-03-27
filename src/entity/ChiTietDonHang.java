@@ -9,7 +9,10 @@ package entity;
  * @author macbook
  */
 public class ChiTietDonHang {
-     private LichSuGia lichSuGia;
+    private int MaLSG;
+    private int MaDonHang;
+    private int MaSach;
+    private LichSuGia lichSuGia;
     private DonHang donHang;
     private int soLuong;
     private String donGia;
