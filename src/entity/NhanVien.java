@@ -11,14 +11,14 @@ package entity;
 public class NhanVien {
     private int MaNV;
     private String HoTen;
-    private String TaiKhoan;
-    private String MatKhau;
+    public String TaiKhoan;
+    public String MatKhau;
     private String Email;
     private String DiaChi;
     private String DienThoai;
     private String GioiTinh;
     private String NgaySinh;
-    private String Vaitro;
+    public String Vaitro;
 
     public NhanVien() {
     }

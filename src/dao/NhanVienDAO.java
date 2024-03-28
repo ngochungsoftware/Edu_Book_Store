@@ -146,7 +146,40 @@ public class NhanVienDAO {
         }
         return null;
     }
-
+    public static String checkLoginAndGetRole(String username, String password) {
+        String role = null;
+        String sql = "SELECT VaiTro FROM NhanVien WHERE TaiKhoan = ? AND MatKhau = ?";
+        try (Connection conn = jdbcHelper.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                if (resultSet.next()) {
+                    role = resultSet.getString("VaiTro");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return role;
+    }
+    public static ArrayList<NhanVien> getEmployeesForLogin() {
+        ArrayList<NhanVien> employeesForLogin = new ArrayList<>();
+        String sql = "SELECT TaiKhoan, MatKhau, VaiTro FROM NhanVien";
+        try (Connection conn = jdbcHelper.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet resultSet = pstmt.executeQuery()) {
+            while (resultSet.next()) {
+                NhanVien employee = new NhanVien();
+                employee.setTaiKhoan(resultSet.getString("TaiKhoan"));
+                employee.setMatKhau(resultSet.getString("MatKhau"));
+                employee.setVaitro(resultSet.getString("VaiTro"));
+                employeesForLogin.add(employee);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employeesForLogin;
+    }
     public static int UpdateProfie(NhanVien acc) {
         String sql = "UPDATE NhanVien SET HoTen=?, TaiKhoan=?, MatKhau=?, Email=?, DiaChi=?, DienThoai=?, GioiTinh=?, NgaySinh=?, Vaitro=? WHERE MaNhanVien=?";
         try (Connection conn = jdbcHelper.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -159,7 +192,7 @@ public class NhanVienDAO {
             pstmt.setString(7, acc.getGioiTinh());
             pstmt.setDate(8, java.sql.Date.valueOf(LocalDate.parse(acc.getNgaySinh())));
             pstmt.setString(9, acc.getVaitro());
-            pstmt.setString(10,String.valueOf(MaNV));
+            pstmt.setInt(10,acc.getMaNV());
             return pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -190,7 +223,7 @@ public class NhanVienDAO {
             pstmt.setString(7, acc.getGioiTinh());
             pstmt.setDate(8, java.sql.Date.valueOf(LocalDate.parse(acc.getNgaySinh())));
             pstmt.setString(9, acc.getVaitro());
-            pstmt.setString(10, String.valueOf(MaNV));
+            pstmt.setInt(10, acc.getMaNV());
             return pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);

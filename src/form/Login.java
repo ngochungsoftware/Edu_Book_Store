@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import entity.NhanVien;
 import dao.NhanVienDAO;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -25,10 +26,6 @@ import dao.NhanVienDAO;
  */
 public class Login extends javax.swing.JFrame {
 
-    private JTextField txtUsername;
-    private JPasswordField txtPassword;
-    private JButton btnLog;
-    private JButton btnCancel;
     private ArrayList<NhanVien> listNV = new ArrayList<NhanVien>();
     private static String vaiTro;
 
@@ -113,12 +110,14 @@ public class Login extends javax.swing.JFrame {
     }
 
     public void loadNV() {
-        try {
-            listNV = NhanVienDAO.loadNV();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+    try {
+        listNV = NhanVienDAO.getEmployeesForLogin();
+    } catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
     }
+}
+
+
 
     public void login() {
         boolean showMessage = false;
