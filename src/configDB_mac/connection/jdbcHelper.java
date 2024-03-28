@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package configDB_mac;
+package connection;
 
 /**
  *
@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 
 public class jdbcHelper {
 
-    private static final String USERNAME = "SA";
-    private static final String PASSWORD = "example_123";
+    private static final String USERNAME = "sa";
+    private static final String PASSWORD = "12345678";
     private static final String SERVER = "localhost";
     private static final String PORT = "1433";
     private static final String DATABASE_NAME = "Edu_Book_Store";
@@ -106,4 +106,12 @@ public class jdbcHelper {
         }
     }
 
+    public static void main(String[] args) {
+        Connection cn = getConnection();
+        if (cn != null) {
+            System.out.println("Ket Noi Thanh Cong");
+        } else {
+            System.out.println("That Bai");
+        }
+    }
 }

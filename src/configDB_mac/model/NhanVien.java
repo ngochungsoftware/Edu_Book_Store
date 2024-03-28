@@ -2,45 +2,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package model;
 
 /**
  *
  * @author ADMIN
  */
 public class NhanVien {
-    int MaNV;
+    String MaNV;
     String HoTen;
-    String TaiKhoan;
-    String MatKhau;
     String Email;
     String DiaChi;
     String DienThoai;
     String GioiTinh;
     String NgaySinh;
-    String Vaitro;
+    String VaiTro;
+    String Luong;
 
     public NhanVien() {
     }
 
-    public NhanVien(int MaNV, String HoTen, String TaiKhoan, String MatKhau, String Email, String DiaChi, String DienThoai, String GioiTinh, String NgaySinh, String Vaitro) {
+    public NhanVien(String MaNV, String HoTen, String Email, String DiaChi, String DienThoai, String GioiTinh, String NgaySinh, String VaiTro, String Luong) {
         this.MaNV = MaNV;
         this.HoTen = HoTen;
-        this.TaiKhoan = TaiKhoan;
-        this.MatKhau = MatKhau;
         this.Email = Email;
         this.DiaChi = DiaChi;
         this.DienThoai = DienThoai;
         this.GioiTinh = GioiTinh;
         this.NgaySinh = NgaySinh;
-        this.Vaitro = Vaitro;
+        this.VaiTro = VaiTro;
+        this.Luong = Luong;
     }
 
-    public int getMaNV() {
+    public String getMaNV() {
         return MaNV;
     }
 
-    public void setMaNV(int MaNV) {
+    public void setMaNV(String MaNV) {
         this.MaNV = MaNV;
     }
 
@@ -50,22 +48,6 @@ public class NhanVien {
 
     public void setHoTen(String HoTen) {
         this.HoTen = HoTen;
-    }
-
-    public String getTaiKhoan() {
-        return TaiKhoan;
-    }
-
-    public void setTaiKhoan(String TaiKhoan) {
-        this.TaiKhoan = TaiKhoan;
-    }
-
-    public String getMatKhau() {
-        return MatKhau;
-    }
-
-    public void setMatKhau(String MatKhau) {
-        this.MatKhau = MatKhau;
     }
 
     public String getEmail() {
@@ -108,18 +90,26 @@ public class NhanVien {
         this.NgaySinh = NgaySinh;
     }
 
-    public String getVaitro() {
-        return Vaitro;
+    public String getVaiTro() {
+        return VaiTro;
     }
 
-    public void setVaitro(String Vaitro) {
-        this.Vaitro = Vaitro;
+    public void setVaiTro(String VaiTro) {
+        this.VaiTro = VaiTro;
+    }
+
+    public String getLuong() {
+        return Luong;
+    }
+
+    public void setLuong(String Luong) {
+        this.Luong = Luong;
     }
 
     @Override
     public String toString() {
-        return "NhanVien{" + "MaNV=" + MaNV + ", HoTen=" + HoTen + ", TaiKhoan=" + TaiKhoan + ", MatKhau=" + MatKhau + ", Email=" + Email + ", DiaChi=" + DiaChi + ", DienThoai=" + DienThoai + ", GioiTinh=" + GioiTinh + ", NgaySinh=" + NgaySinh + ", Vaitro=" + Vaitro + '}';
+        return "NhanVien{" + "MaNV=" + MaNV + ", HoTen=" + HoTen + ", Email=" + Email + ", DiaChi=" + DiaChi + ", DienThoai=" + DienThoai + ", GioiTinh=" + GioiTinh + ", NgaySinh=" + NgaySinh + ", VaiTro=" + VaiTro + ", Luong=" + Luong + '}';
     }
-    
+
     
 }
