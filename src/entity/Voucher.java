@@ -5,78 +5,104 @@
 package entity;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
- * @author macbook
+ * @author pc
  */
 public class Voucher {
-    private int MaVoucher;
-    private String TenVoucher;
-    private LocalDate NgayBatDau;
-    private LocalDate NgayKetThuc;
-    private float Giamgia;
-    private String DieuKien;
 
+    private String maVoucher;
+    private String tenChuongTrinh;
+    private String Loai;
+    private Date NgayBD;
+    private Date NgayKT;  
+    private String dieuKien;
+
+    public Voucher(String maVoucher, String tenChuongTrinh, String Loai, Date NgayBD, Date NgayKT, String dieuKien) {
+        this.maVoucher = maVoucher;
+        this.tenChuongTrinh = tenChuongTrinh;
+        this.Loai = Loai;
+        this.NgayBD = NgayBD;
+        this.NgayKT = NgayKT;
+        this.dieuKien = dieuKien;
+    }
+
+    
+    
+    public Voucher(String maVoucher, String tenChuongTrinh, String Loai, Date NgayBD, Date NgayKT) {
+        this.maVoucher = maVoucher;
+        this.tenChuongTrinh = tenChuongTrinh;
+        this.Loai = Loai;
+        this.NgayBD = NgayBD;
+        this.NgayKT = NgayKT;
+        
+    }
+
+    
     public Voucher() {
     }
 
-    public Voucher(int MaVoucher, String TenVoucher, LocalDate NgayBatDau, LocalDate NgayKetThuc, float Giamgia, String DieuKien) {
-        this.MaVoucher = MaVoucher;
-        this.TenVoucher = TenVoucher;
-        this.NgayBatDau = NgayBatDau;
-        this.NgayKetThuc = NgayKetThuc;
-        this.Giamgia = Giamgia;
-        this.DieuKien = DieuKien;
+    public String getMaVoucher() {
+        return maVoucher;
     }
 
-    public int getMaVoucher() {
-        return MaVoucher;
+    public void setMaVoucher(String maVoucher) {
+        this.maVoucher = maVoucher;
     }
 
-    public void setMaVoucher(int MaVoucher) {
-        this.MaVoucher = MaVoucher;
+    public String getTenChuongTrinh() {
+        return tenChuongTrinh;
     }
 
-    public String getTenVoucher() {
-        return TenVoucher;
+    public void setTenChuongTrinh(String tenChuongTrinh) {
+        this.tenChuongTrinh = tenChuongTrinh;
     }
 
-    public void setTenVoucher(String TenVoucher) {
-        this.TenVoucher = TenVoucher;
+    public Date getNgayBD() {
+        return NgayBD;
     }
 
-    public LocalDate getNgayBatDau() {
-        return NgayBatDau;
+    public void setNgayBD(Date NgayBD) {
+        this.NgayBD = NgayBD;
     }
 
-    public void setNgayBatDau(LocalDate NgayBatDau) {
-        this.NgayBatDau = NgayBatDau;
+    public Date getNgayKT() {
+        return NgayKT;
     }
 
-    public LocalDate getNgayKetThuc() {
-        return NgayKetThuc;
+    public void setNgayKT(Date NgayKT) {
+        this.NgayKT = NgayKT;
     }
 
-    public void setNgayKetThuc(LocalDate NgayKetThuc) {
-        this.NgayKetThuc = NgayKetThuc;
+    public String getLoai() {
+        return Loai;
     }
 
-    public float getGiamgia() {
-        return Giamgia;
-    }
-
-    public void setGiamgia(float Giamgia) {
-        this.Giamgia = Giamgia;
+    public void setLoai(String Loai) {
+        this.Loai = Loai;
     }
 
     public String getDieuKien() {
-        return DieuKien;
+        return dieuKien;
     }
 
-    public void setDieuKien(String DieuKien) {
-        this.DieuKien = DieuKien;
+    public void setDieuKien(String dieuKien) {
+        this.dieuKien = dieuKien;
     }
+
+    @Override
+    public String toString() {
+        return "Voucher{" + "maVoucher=" + maVoucher + ", tenChuongTrinh=" + tenChuongTrinh + ", NgayBD=" + NgayBD + ", NgayKT=" + NgayKT + ", Loai=" + Loai + ", dieuKien=" + dieuKien + '}';
+    }
+
     
+
+    
+    
+    
+
     
 }
