@@ -45,7 +45,7 @@ public class NhaXuatBanDAO {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChuDeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return nhaXuatBan;
     }

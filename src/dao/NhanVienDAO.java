@@ -159,7 +159,7 @@ public class NhanVienDAO {
             pstmt.setString(7, acc.getGioiTinh());
             pstmt.setDate(8, java.sql.Date.valueOf(LocalDate.parse(acc.getNgaySinh())));
             pstmt.setString(9, acc.getVaitro());
-            pstmt.setString(10, String.valueOf(MaNV));
+            pstmt.setString(10,String.valueOf(MaNV));
             return pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -178,21 +178,19 @@ public class NhanVienDAO {
         }
     }
 
-    public static int insertOneProfie(SalePerson acc) {
+    public static int insertOneProfie(NhanVien acc) {
         String sql = "EXEC SP_InsertOneSalePerson ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
         try (Connection conn = jdbcHelper.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, acc.getTenNhanVien());
-            pstmt.setString(2, acc.getGioiTinh());
-            pstmt.setDate(3, java.sql.Date.valueOf(LocalDate.parse(acc.getNgaySinh())));
-            pstmt.setDate(4, java.sql.Date.valueOf(LocalDate.parse(acc.getNgayVaoLam())));
+            pstmt.setString(1, acc.getHoTen());
+            pstmt.setString(2, acc.getTaiKhoan());
+            pstmt.setString(3, acc.getMatKhau());
+            pstmt.setString(4, acc.getEmail());
             pstmt.setString(5, acc.getDiaChi());
-            pstmt.setString(6, acc.getSdt());
-            pstmt.setString(7, acc.getMaChucVu());
-            pstmt.setString(8, acc.getTenDangNhap());
-            pstmt.setString(9, acc.getHinhAnh());
-            pstmt.setString(10, acc.getMatKhau());
-            pstmt.setString(11, acc.getLoaiTaiKhoan());
-            pstmt.setString(12, acc.getCanCuocCongDan());
+            pstmt.setString(6, acc.getDienThoai());
+            pstmt.setString(7, acc.getGioiTinh());
+            pstmt.setDate(8, java.sql.Date.valueOf(LocalDate.parse(acc.getNgaySinh())));
+            pstmt.setString(9, acc.getVaitro());
+            pstmt.setString(10, String.valueOf(MaNV));
             return pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
